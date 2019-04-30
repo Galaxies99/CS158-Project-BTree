@@ -1,0 +1,40 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+G:/GalaxiesWork/CS158-Project-BTree/BplusTree/BTree.hpp
+utility.hpp
+G:/GalaxiesWork/CS158-Project-BTree/BplusTree/utility.hpp
+functional
+-
+cstddef
+-
+exception.hpp
+G:/GalaxiesWork/CS158-Project-BTree/BplusTree/exception.hpp
+
+G:/GalaxiesWork/CS158-Project-BTree/BplusTree/exception.hpp
+cstddef
+-
+cstring
+-
+string
+-
+
+G:/GalaxiesWork/CS158-Project-BTree/BplusTree/main.cpp
+cassert
+-
+iostream
+-
+string
+-
+BTree.hpp
+G:/GalaxiesWork/CS158-Project-BTree/BplusTree/BTree.hpp
+
+G:/GalaxiesWork/CS158-Project-BTree/BplusTree/utility.hpp
+utility
+-
+

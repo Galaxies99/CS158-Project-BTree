@@ -1,0 +1,4 @@
+"F:\Software\CLion 2018.3.4\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" G:\GalaxiesWork\CS158-Project-BTree\BplusTree
+-- Configuring done
+-- Generating done
+-- Build files have been written to: G:/GalaxiesWork/CS158-Project-BTree/BplusTree/cmake-build-debug
