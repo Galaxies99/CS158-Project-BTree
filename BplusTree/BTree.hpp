@@ -10,17 +10,21 @@ namespace sjtu {
 	template <class KeyType, class ValueType, class Compare = std::less<KeyType> >
 	class BTree {
 		public:
-			typedef std :: pair<KeyType, ValueType> value_type;
+			typedef std::pair<KeyType, ValueType> value_type;
 			typedef ssize_t node_t;
 			typedef ssize_t offset_t;
+
 			class iterator;
+
 			class const_iterator;
+
 		private:
 			static const int M = 4000 / sizeof(KeyType);
 			static const int L = ((sizeof(value_type) > 4000) ? 1 : (4000 / sizeof(value_type)));
-			static const int LMIN = L/2;						// L / 2
-			static const int MMIN = M/2;						// M / 2
+			static const int LMIN = (L + 1) / 2;            // L / 2
+			static const int MMIN = (M + 1) / 2;            // M / 2
 			static const int info_offset = 0;
+
 			/*
 			 * Note: (4+sizeof(KeyType)) * (M-1) + 4 <= 4096
 			 * M <= 4092 / (sizeof(KeyType) + 4) + 1;
@@ -31,51 +35,69 @@ namespace sjtu {
 
 			struct nameString {
 				char *str;
-				nameString() {str = new char[10];}
-				~nameString() {if(str != nullptr) delete str;}
+
+				nameString() { str = new char[10]; }
+
+				~nameString() { if (str != nullptr) delete str; }
+
 				void setName(int id) {
-					if(id < 0 || id > 9) throw "no more B plus Tree!";
-					str[0] = 'd'; str[1] = 'a'; str[2] = 't';
+					if (id < 0 || id > 9) throw "no more B plus Tree!";
+					str[0] = 'd';
+					str[1] = 'a';
+					str[2] = 't';
 					str[3] = static_cast <char> (id + '0');
-					str[4] = '.'; str[5] = 'd'; str[6] = 'a'; str[7] = 't';
+					str[4] = '.';
+					str[5] = 'd';
+					str[6] = 'a';
+					str[7] = 't';
 					str[8] = '\0';
+				}
+
+				void setName(char *_str) {
+					int i = 0;
+					for (; _str[i]; ++i) str[i] = _str[i];
+					str[i] = 0;
 				}
 			};
 
 			struct basicInfo {
-				node_t head;					// head of leaf
-				node_t tail;					// tail of leaf
-				node_t root;					// root of Btree
-				size_t size;					// size of Btree
-				offset_t eof;					// end of file
+				node_t head;          // head of leaf
+				node_t tail;          // tail of leaf
+				node_t root;          // root of Btree
+				size_t size;          // size of Btree
+				offset_t eof;          // end of file
 				basicInfo() {
-					head = 0; tail = 0; root = 0;
-					size = 0; eof = 0;
+					head = 0;
+					tail = 0;
+					root = 0;
+					size = 0;
+					eof = 0;
 				}
 			};
 
 			struct leafNode {
-				offset_t offset;					// offset
-				node_t par;								// parent
-				node_t pre, nxt;					// previous and next leaf
-				int cnt;									// number of pairs in leaf
-				value_type data[L + 1];		// data
+				offset_t offset;          // offset
+				node_t par;                // parent
+				node_t pre, nxt;          // previous and next leaf
+				int cnt;                  // number of pairs in leaf
+				value_type data[L + 1];    // data
 				leafNode() {
 					offset = 0, par = 0, pre = 0, nxt = 0, cnt = 0;
 				}
 			};
 
 			struct internalNode {
-				offset_t offset;			// offset
-				node_t par;						// parent
-				node_t ch[M + 1];			// children
-				KeyType key[M + 1];		// key
-				int cnt;							// number in internal node
-				bool type; 						// child is leaf or not
+				offset_t offset;      // offset
+				node_t par;            // parent
+				node_t ch[M + 1];      // children
+				KeyType key[M + 1];    // key
+				int cnt;              // number in internal node
+				bool type;            // child is leaf or not
 				internalNode() {
 					offset = 0, par = 0;
-					for (int i=0; i<=M+1; ++i) ch[i] = 0;
-					cnt = 0; type = 0;
+					for (int i = 0; i <= M; ++i) ch[i] = 0;
+					cnt = 0;
+					type = 0;
 				}
 			};
 
@@ -98,9 +120,9 @@ namespace sjtu {
 			 */
 
 			inline void openFile() {
-				if(fp_open == 0) {
+				if (fp_open == 0) {
 					fp = fopen(fp_name.str, "rb+");
-					if(fp == nullptr) {
+					if (fp == nullptr) {
 						fp = fopen(fp_name.str, "w");
 						fclose(fp);
 						fp = fopen(fp_name.str, "rb+");
@@ -110,26 +132,87 @@ namespace sjtu {
 			}
 
 			inline void closeFile() {
-				if(fp_open == 1) {
+				if (fp_open == 1) {
 					fclose(fp);
 					fp_open = 0;
 				}
 			}
 
 			inline void readFile(void *place, offset_t offset, size_t num, size_t size) {
-				++ fp_cnt;
+				++fp_cnt;
 				// openFile();
-				if(fseek(fp, offset, SEEK_SET)) throw "open file failed!";
+				if (fseek(fp, offset, SEEK_SET)) throw "open file failed!";
 				size_t ret = fread(place, num, size, fp);
 				// closeFile();
 			}
 
 			inline void writeFile(void *place, offset_t offset, size_t num, size_t size) {
-				++ fp_cnt;
+				++fp_cnt;
 				// openFile();
-				if(fseek(fp, offset, SEEK_SET)) throw "open file failed!";
+				if (fseek(fp, offset, SEEK_SET)) throw "open file failed!";
 				size_t ret = fwrite(place, num, size, fp);
 				// closeFile();
+			}
+
+			nameString fp_from_name;
+			FILE *fp_from;
+
+			inline void copy_readFile(void *place, offset_t offset, size_t num, size_t size) {
+				++fp_cnt;
+				if (fseek(fp_from, offset, SEEK_SET)) throw "open file failed";
+				size_t ret = fread(place, num, size, fp_from);
+			}
+
+			offset_t leaf_offset_temp;
+
+			inline void copy_leaf(offset_t offset, offset_t from_offset, offset_t par_offset) {
+				leafNode leaf, leaf_from, pre_leaf;
+				copy_readFile(&leaf_from, from_offset, 1, sizeof(leafNode));
+				leaf.offset = offset, leaf.par = par_offset;
+				leaf.cnt = leaf_from.cnt; leaf.pre = leaf_offset_temp; leaf.nxt = 0;
+				if(leaf_offset_temp != 0) {
+					readFile(&pre_leaf, leaf_offset_temp, 1, sizeof(leafNode));
+					pre_leaf.nxt = offset;
+					writeFile(&pre_leaf, leaf_offset_temp, 1, sizeof(leafNode));
+					info.tail = offset;
+				} else info.head = offset;
+				for (int i=0; i<leaf.cnt; ++i) leaf.data[i] = leaf_from.data[i];
+				writeFile(&leaf, offset, 1, sizeof(leafNode));
+				info.eof += sizeof(leafNode);
+				leaf_offset_temp = offset;
+			}
+
+			inline void copy_node(offset_t offset, offset_t from_offset, offset_t par_offset) {
+				internalNode node, node_from;
+				copy_readFile(&node_from, from_offset, 1, sizeof(internalNode));
+				writeFile(&node, offset, 1, sizeof(internalNode));
+				info.eof += sizeof(internalNode);
+				node.offset = offset; node.par = par_offset;
+				node.cnt = node_from.cnt; node.type = node_from.type;
+				for (int i=0; i<node.cnt; ++i) {
+					node.key[i] = node_from.key[i];
+					if(node.type == 1) {  					// leaf
+						copy_leaf(info.eof, node_from.ch[i], offset);
+					} else {                        // node
+						copy_node(info.eof, node_from.ch[i], offset);
+					}
+				}
+				writeFile(&node, offset, 1, sizeof(internalNode));
+			}
+
+			inline void copyFile(char *to, char *from) {
+				fp_from_name.setName(from);
+				// std :: cout << from << std :: endl << fp_from_name.str << std :: endl;
+				fp_from = fopen(fp_from_name.str, "rb+");
+				if (fp_from == nullptr) throw "no such file";
+				basicInfo infoo;
+				copy_readFile(&infoo, info_offset, 1, sizeof(basicInfo));
+				leaf_offset_temp = 0; info.size = infoo.size;
+				info.root = info.eof = sizeof(basicInfo);
+				writeFile(&info, info_offset, 1, sizeof(basicInfo));
+				copy_node(info.root, infoo.root, 0);
+				writeFile(&info, info_offset, 1, sizeof(basicInfo));
+				fclose(fp_from);
 			}
 
 			// ============================= end of file operation =================================== //
@@ -918,15 +1001,18 @@ namespace sjtu {
 			BTree(const BTree& other) {
 				++ID; fp_name.setName(ID);
 				fp_cnt = 0;
-//				copyFile(fp_name.str, other.fp_name.str);
-				readFile(&info, info_offset, 1, sizeof(basicInfo));
+				openFile();
+				copyFile(fp_name.str, other.fp_name.str);
+//				readFile(&info, info_offset, 1, sizeof(basicInfo));
 			}
 
 			BTree& operator=(const BTree& other) {
 				++ID; fp_name.setName(ID);
 				fp_cnt = 0;
-//				copyFile(fp_name.str, other.fp_name.str);
-				readFile(&info, info_offset, 1, sizeof(basicInfo));
+				openFile();
+				copyFile(fp_name.str, other.fp_name.str);
+//				readFile(&info, info_offset, 1, sizeof(basicInfo));
+
 			}
 
 			~BTree() {
@@ -1066,7 +1152,7 @@ namespace sjtu {
 			 * returned.
 			 */
 			iterator find(const KeyType& key) {
-				offset_t leaf_offset = locate_leaf(key);
+				offset_t leaf_offset = locate_leaf(key, info.root);
 				leafNode leaf;
 				readFile(&leaf, leaf_offset, 1, sizeof(leafNode));
 				for (int i = 0; i < leaf.cnt; ++i)
