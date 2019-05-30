@@ -29,6 +29,5 @@ namespace sjtu{
     };
 
 }
-}
 
 #endif //BPLUSTREE_UTILITY_H
