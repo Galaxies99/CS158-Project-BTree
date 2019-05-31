@@ -10,7 +10,7 @@ namespace sjtu {
 	template <class KeyType, class ValueType, class Compare = std::less<KeyType> >
 	class BTree {
 		public:
-			typedef std::pair<KeyType, ValueType> value_type;
+			typedef pair <KeyType, ValueType> value_type;
 			typedef ssize_t node_t;
 			typedef ssize_t offset_t;
 
@@ -19,10 +19,10 @@ namespace sjtu {
 			class const_iterator;
 
 		private:
-			static const int M = 4000 / sizeof(KeyType);
-			static const int L = ((sizeof(value_type) > 4000) ? 1 : (4000 / sizeof(value_type)));
-			static const int LMIN = (L + 1) / 2;            // L / 2
-			static const int MMIN = (M + 1) / 2;            // M / 2
+			static const int M = 1000;
+			static const int L = 200;
+			static const int LMIN = 100;            // L / 2
+			static const int MMIN = 500;            // M / 2
 			static const int info_offset = 0;
 
 			/*
@@ -118,15 +118,19 @@ namespace sjtu {
 			 *    writeFile(*place, offset, num, size): write size * num bytes to the offset position of the
 			 *                                         file from *place, return successful operations.
 			 */
+			bool file_already_exists;
 
 			inline void openFile() {
+				file_already_exists = 1;
 				if (fp_open == 0) {
 					fp = fopen(fp_name.str, "rb+");
 					if (fp == nullptr) {
+						file_already_exists = 0;
 						fp = fopen(fp_name.str, "w");
 						fclose(fp);
 						fp = fopen(fp_name.str, "rb+");
-					}
+					} else readFile(&info, info_offset, 1, sizeof(basicInfo));
+//					std :: cerr << info.size << std :: endl;
 					fp_open = 1;
 				}
 			}
@@ -140,18 +144,14 @@ namespace sjtu {
 
 			inline void readFile(void *place, offset_t offset, size_t num, size_t size) {
 				++fp_cnt;
-				// openFile();
 				if (fseek(fp, offset, SEEK_SET)) throw "open file failed!";
 				size_t ret = fread(place, num, size, fp);
-				// closeFile();
 			}
 
 			inline void writeFile(void *place, offset_t offset, size_t num, size_t size) {
 				++fp_cnt;
-				// openFile();
 				if (fseek(fp, offset, SEEK_SET)) throw "open file failed!";
 				size_t ret = fwrite(place, num, size, fp);
-				// closeFile();
 			}
 
 			nameString fp_from_name;
@@ -176,7 +176,7 @@ namespace sjtu {
 					writeFile(&pre_leaf, leaf_offset_temp, 1, sizeof(leafNode));
 					info.tail = offset;
 				} else info.head = offset;
-				for (int i=0; i<leaf.cnt; ++i) leaf.data[i] = leaf_from.data[i];
+				for (int i=0; i<leaf.cnt; ++i) leaf.data[i].first = leaf_from.data[i].first, leaf.data[i].second = leaf_from.data[i].second;
 				writeFile(&leaf, offset, 1, sizeof(leafNode));
 				info.eof += sizeof(leafNode);
 				leaf_offset_temp = offset;
@@ -268,26 +268,23 @@ namespace sjtu {
 			 * return Success if inserted.
 			 * if leaf count is bigger than L then call split_leaf().
 			 */
-			std :: pair<iterator, OperationResult> insert_leaf(leafNode &leaf, const KeyType &key, const ValueType &value) {
+			pair <iterator, OperationResult> insert_leaf(leafNode &leaf, const KeyType &key, const ValueType &value) {
 				iterator ret;
 				int pos = 0;
 				for (; pos < leaf.cnt; ++pos) {
-					if (key == leaf.data[pos].first) return std :: make_pair(iterator(nullptr), Fail);				// there are elements with the same key
+					if (key == leaf.data[pos].first) return pair <iterator, OperationResult> (iterator(nullptr), Fail);			// there are elements with the same key
 					if (key < leaf.data[pos].first) break;
 				}
 				for (int i = leaf.cnt - 1; i >= pos; --i)
-					leaf.data[i+1] = leaf.data[i];
-				leaf.data[pos] = std :: make_pair(key, value);
+					leaf.data[i+1].first = leaf.data[i].first, leaf.data[i+1].second = leaf.data[i].second;
+				leaf.data[pos].first = key; leaf.data[pos].second = value;
 				++leaf.cnt;
 				++info.size;
 				ret.from = this; ret.place = pos; ret.offset = leaf.offset;
 				writeFile(&info, info_offset, 1, sizeof(basicInfo));
 				if(leaf.cnt <= L) writeFile(&leaf, leaf.offset, 1, sizeof(leafNode));
-				else {
-					ret.place -= (leaf.cnt >> 1);
-					split_leaf(leaf, ret);
-				}
-				return std :: make_pair(ret, Success);
+				else split_leaf(leaf, ret, key);
+				return pair <iterator, OperationResult> (ret, Success);
 			}
 
 			/**
@@ -315,7 +312,7 @@ namespace sjtu {
 			 * function: split a leaf into two parts.
 			 * then, call insert_node() to insert a (key, ch) pair in the father node.
 			 */
-			void split_leaf(leafNode &leaf, iterator &it) {
+			void split_leaf(leafNode &leaf, iterator &it, const KeyType &key) {
 				leafNode newleaf;
 				newleaf.cnt = leaf.cnt - (leaf.cnt >> 1);
 				leaf.cnt = leaf.cnt >> 1;
@@ -323,9 +320,13 @@ namespace sjtu {
 				it.offset = newleaf.offset;
 				info.eof += sizeof(leafNode);
 				newleaf.par = leaf.par;
-				for (int i=0; i<newleaf.cnt; ++i)
-					newleaf.data[i] = leaf.data[i + leaf.cnt];
-
+				for (int i=0; i<newleaf.cnt; ++i) {
+					newleaf.data[i].first = leaf.data[i + leaf.cnt].first, newleaf.data[i].second = leaf.data[i + leaf.cnt].second;
+					if(newleaf.data[i].first == key) {
+						it.offset = newleaf.offset;
+						it.place = i;
+					}
+				}
 				// link operation begin
 				newleaf.nxt = leaf.nxt;
 				newleaf.pre = leaf.offset;
@@ -430,10 +431,11 @@ namespace sjtu {
 				KeyType oldkey, newkey;
 				oldkey = right.data[0].first;
 				newkey = right.data[1].first;
-				leaf.data[leaf.cnt] = right.data[0];
+				leaf.data[leaf.cnt].first = right.data[0].first;
+				leaf.data[leaf.cnt].second = right.data[0].second;
 				leaf.cnt++;
 				right.cnt--;
-				for (int i = 0; i < right.cnt; ++i) right.data[i] = right.data[i + 1];
+				for (int i = 0; i < right.cnt; ++i) right.data[i].first = right.data[i + 1].first, right.data[i].second = right.data[i + 1].second;
 
 				internalNode node;
 				readFile(&node, leaf.par, 1, sizeof(internalNode));
@@ -466,8 +468,9 @@ namespace sjtu {
 				oldkey = leaf.data[0].first;
 				newkey = left.data[left.cnt - 1].first;
 				for (int i = leaf.cnt - 1; i >= 0; -- i)
-					leaf.data[i+1] = leaf.data[i];
-				leaf.data[0] = left.data[left.cnt - 1];
+					leaf.data[i + 1].first = leaf.data[i].first, leaf.data[i + 1].second = leaf.data[i].second;
+				leaf.data[0].first = left.data[left.cnt - 1].first;
+				leaf.data[0].second = left.data[left.cnt - 1].second;
 				++leaf.cnt;
 				--left.cnt;
 
@@ -495,7 +498,7 @@ namespace sjtu {
 				leafNode right;
 				readFile(&right, leaf.nxt, 1, sizeof(leafNode));
 				if(right.par != leaf.par) return Fail;
-				for (int i = 0; i < right.cnt; ++i) leaf.data[leaf.cnt ++] = right.data[i];
+				for (int i = 0; i < right.cnt; ++i) leaf.data[leaf.cnt].first = right.data[i].first, leaf.data[leaf.cnt].second = right.data[i].second, ++leaf.cnt;
 				leaf.nxt = right.nxt;
 				if(right.offset == info.tail) {
 					info.tail = leaf.offset;
@@ -531,7 +534,7 @@ namespace sjtu {
 				leafNode left;
 				readFile(&left, leaf.pre, 1, sizeof(leafNode));
 				if (left.par != leaf.par) return Fail;
-				for (int i = 0; i < leaf.cnt; ++i) left.data[left.cnt++] = leaf.data[i];
+				for (int i = 0; i < leaf.cnt; ++i) left.data[left.cnt].first = leaf.data[i].first, left.data[left.cnt].second = leaf.data[i].second, ++left.cnt;
 				left.nxt = leaf.nxt;
 				if(info.tail == leaf.offset) {
 					info.tail = left.offset;
@@ -612,7 +615,7 @@ namespace sjtu {
 
 			/**
 			 * function: borrow from right brother.
-			 * return Success if success, return Fail if fail.
+			 * return Success if succcess, return Fail if fail.
 			 */
 			OperationResult borrow_right_node(internalNode node) {
 				if(node.par == 0) return Fail;
@@ -828,8 +831,11 @@ namespace sjtu {
 						leafNode p;
 						from -> readFile(&p, offset, 1, sizeof(leafNode));
 						if(place == p.cnt - 1) {
-							offset = p.nxt;
-							place = 0;
+							if(p.nxt == 0) ++ place;
+							else {
+								offset = p.nxt;
+								place = 0;
+							}
 						} else ++ place;
 						return ret;
 					}
@@ -840,9 +846,12 @@ namespace sjtu {
 						}
 						leafNode p;
 						from -> readFile(&p, offset, 1, sizeof(leafNode));
-						if (place == p.cnt - 1) {
-							offset = p.nxt;
-							place = 0;
+						if(place == p.cnt - 1) {
+							if(p.nxt == 0) ++ place;
+							else {
+								offset = p.nxt;
+								place = 0;
+							}
 						} else ++ place;
 						return *this;
 					}
@@ -991,28 +1000,26 @@ namespace sjtu {
 			// Default Constructor and Copy Constructor
 
 			BTree() {
-				++ID; fp_name.setName(ID);
+				fp_name.setName(ID);
 				fp_cnt = 0;
 				fp = nullptr;
 				openFile();
-				build_tree();
+				if (file_already_exists == 0) build_tree();
 			}
 
 			BTree(const BTree& other) {
-				++ID; fp_name.setName(ID);
+				fp_name.setName(ID);
 				fp_cnt = 0;
 				openFile();
 				copyFile(fp_name.str, other.fp_name.str);
-//				readFile(&info, info_offset, 1, sizeof(basicInfo));
 			}
 
 			BTree& operator=(const BTree& other) {
-				++ID; fp_name.setName(ID);
+//				++ID; 
+				fp_name.setName(ID);
 				fp_cnt = 0;
 				openFile();
 				copyFile(fp_name.str, other.fp_name.str);
-//				readFile(&info, info_offset, 1, sizeof(basicInfo));
-
 			}
 
 			~BTree() {
@@ -1024,20 +1031,13 @@ namespace sjtu {
 			 * Return a pair, the first of the pair is the iterator point to the new
 			 * element, the second of the pair is Success if it is successfully inserted
 			 */
-			std :: pair<iterator, OperationResult> insert(const KeyType& key, const ValueType& value) {
-//				openFile();
+			pair <iterator, OperationResult> insert(const KeyType& key, const ValueType& value) {
 				offset_t leaf_offset = locate_leaf(key, info.root);
 				leafNode leaf;
-				std :: pair<iterator, OperationResult> ret;
-				// std :: cout << "here ok!";
-				// std :: cout << leaf_offset << std :: endl;
 				if(info.size == 0 || leaf_offset == 0) {					// smallest elements
 					readFile(&leaf, info.head, 1, sizeof(leafNode));
-					ret = insert_leaf(leaf, key, value);
-					if(ret.second == Fail) {
-//						closeFile();
-						return ret;
-					}
+					pair <iterator, OperationResult> ret = insert_leaf(leaf, key, value);
+					if(ret.second == Fail) return ret;
 					offset_t offset = leaf.par;
 					internalNode node;
 					while(offset != 0) {
@@ -1046,12 +1046,10 @@ namespace sjtu {
 						writeFile(&node, offset, 1, sizeof(internalNode));
 						offset = node.par;
 					}
-//					closeFile();
 					return ret;
 				}
 				readFile(&leaf, leaf_offset, 1, sizeof(leafNode));
-				ret = insert_leaf(leaf, key, value);
-//				closeFile();
+				pair <iterator, OperationResult> ret = insert_leaf(leaf, key, value);
 				return ret;
 			}
 
@@ -1061,7 +1059,6 @@ namespace sjtu {
 			 * Return Fail if the key doesn't exist in the database
 			 */
 			OperationResult erase(const KeyType& key) {
-				// should have exception for very small size. (should be added!!!)
 				offset_t leaf_offset = locate_leaf(key, info.root);
 				if(leaf_offset == 0) return Fail;
 				leafNode leaf;
@@ -1072,7 +1069,7 @@ namespace sjtu {
 				if (pos == leaf.cnt) return Fail;          // not found.
 				// erase in leaf...
 				for (int i = pos + 1; i < leaf.cnt; ++i)
-					leaf.data[i - 1] = leaf.data[i];
+					leaf.data[i - 1].first = leaf.data[i].first, leaf.data[i - 1].second = leaf.data[i].second;
 				leaf.cnt --;
 				// if is the head of the leaf, then update ancestors.
 				offset_t internal_offset = leaf.par;
@@ -1107,17 +1104,13 @@ namespace sjtu {
 			// Return a iterator to the end(the next element after the last)
 			iterator end() {
 				leafNode tail;
-//				openFile();
 				readFile(&tail, info.tail, 1, sizeof(leafNode));
-//				closeFile();
-				return iterator(this, info.tail, tail.cnt - 1);
+				return iterator(this, info.tail, tail.cnt);
 			}
 			const_iterator cend() const {
 				leafNode tail;
-//				openFile();
 				readFile(&tail, info.tail, 1, sizeof(leafNode));
-//				closeFile();
-				return const_iterator(this, info.tail, tail.cnt - 1);
+				return const_iterator(this, info.tail, tail.cnt);
 			}
 			// Check whether this BTree is empty
 			bool empty() const {return info.size == 0;}
@@ -1127,6 +1120,7 @@ namespace sjtu {
 			void clear() {
 				fp = fopen(fp_name.str, "w");
 				fclose(fp);
+				openFile();
 				build_tree();
 			}
 			/**
@@ -1139,8 +1133,10 @@ namespace sjtu {
 			}
 			ValueType at(const KeyType& key){
 				iterator it = find(key);
-				if(it == iterator(nullptr)) throw "not exists";
 				leafNode leaf;
+				if(it == end()) {
+					throw "not found";
+				}
 				readFile(&leaf, it.offset, 1, sizeof(leafNode));
 				return leaf.data[it.place].second;
 			}
@@ -1149,25 +1145,28 @@ namespace sjtu {
 			 * key value of the element to search for.
 			 * Iterator to an element with key equivalent to key.
 			 *   If no such element is found, past-the-end (see end()) iterator is
-			 * returned.
+			 * returned.`	
 			 */
 			iterator find(const KeyType& key) {
 				offset_t leaf_offset = locate_leaf(key, info.root);
+				if(leaf_offset == 0) return end();
 				leafNode leaf;
 				readFile(&leaf, leaf_offset, 1, sizeof(leafNode));
 				for (int i = 0; i < leaf.cnt; ++i)
 					if (leaf.data[i].first == key) return iterator(this, leaf_offset, i);
-				return iterator(nullptr);
+				return end();
 			}
 			const_iterator find(const KeyType& key) const {
 				offset_t leaf_offset = locate_leaf(key);
+				if(leaf_offset == 0) return cend();
 				leafNode leaf;
 				readFile(&leaf, leaf_offset, 1, sizeof(leafNode));
 				for (int i = 0; i < leaf.cnt; ++i)
 					if (leaf.data[i].first == key) return const_iterator(this, leaf_offset, i);
-				return const_iterator(nullptr);
+				return cend();
 			}
 
+			void debugID() { std :: cerr << ID << ' ' << fp_name.str <<std :: endl;}
 			/**
 			 * this is a debug function for traverse.
 			 * just call it if necessary.
