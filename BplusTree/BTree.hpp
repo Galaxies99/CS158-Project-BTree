@@ -19,19 +19,11 @@ namespace sjtu {
 			class const_iterator;
 
 		private:
-			static const int M = 1000;
-			static const int L = 200;
-			static const int LMIN = 100;            // L / 2
-			static const int MMIN = 500;            // M / 2
+			static const int M = 1000;                // need modify
+			static const int L = 200;                 // need modify
+			static const int MMIN = M / 2;            // M / 2
+			static const int LMIN = L / 2;            // L / 2
 			static const int info_offset = 0;
-
-			/*
-			 * Note: (4+sizeof(KeyType)) * (M-1) + 4 <= 4096
-			 * M <= 4092 / (sizeof(KeyType) + 4) + 1;
-			 * 4 + 4 + (sizeof(value_type)) * L <= 4096
-			 * L <= 4088 / sizeof(value_type);
-			 * need to modify M & L, this is just for test!
-			 */
 
 			struct nameString {
 				char *str;
@@ -65,7 +57,7 @@ namespace sjtu {
 				node_t tail;          // tail of leaf
 				node_t root;          // root of Btree
 				size_t size;          // size of Btree
-				offset_t eof;          // end of file
+				offset_t eof;         // end of file
 				basicInfo() {
 					head = 0;
 					tail = 0;
@@ -77,22 +69,22 @@ namespace sjtu {
 
 			struct leafNode {
 				offset_t offset;          // offset
-				node_t par;                // parent
+				node_t par;               // parent
 				node_t pre, nxt;          // previous and next leaf
 				int cnt;                  // number of pairs in leaf
-				value_type data[L + 1];    // data
+				value_type data[L + 1];   // data
 				leafNode() {
 					offset = 0, par = 0, pre = 0, nxt = 0, cnt = 0;
 				}
 			};
 
 			struct internalNode {
-				offset_t offset;      // offset
-				node_t par;            // parent
-				node_t ch[M + 1];      // children
-				KeyType key[M + 1];    // key
-				int cnt;              // number in internal node
-				bool type;            // child is leaf or not
+				offset_t offset;      	// offset
+				node_t par;           	// parent
+				node_t ch[M + 1];     	// children
+				KeyType key[M + 1];   	// key
+				int cnt;              	// number in internal node
+				bool type;            	// child is leaf or not
 				internalNode() {
 					offset = 0, par = 0;
 					for (int i = 0; i <= M; ++i) ch[i] = 0;
@@ -106,7 +98,6 @@ namespace sjtu {
 			bool fp_open;
 			nameString fp_name;
 			basicInfo info;
-			int fp_cnt;
 
 			// ================================= file operation ===================================== //
 			/**
@@ -117,6 +108,10 @@ namespace sjtu {
 			 *                                         file, then put it in *place. return successful operations.
 			 *    writeFile(*place, offset, num, size): write size * num bytes to the offset position of the
 			 *                                         file from *place, return successful operations.
+			 *    copy_readFile(*place, offset, num, size): the same function as readFile, just different filename.
+			 *    copy_leaf(offset, from_offset, par_offset): copy the leaf from from_offset to offset.
+			 *    copy_node(offset, from_offset, par_offset): copy the internal node from from_offset to offset.
+			 *    copy_File(name1, name2): copy file from name1 to name2.
 			 */
 			bool file_already_exists;
 
@@ -130,7 +125,6 @@ namespace sjtu {
 						fclose(fp);
 						fp = fopen(fp_name.str, "rb+");
 					} else readFile(&info, info_offset, 1, sizeof(basicInfo));
-//					std :: cerr << info.size << std :: endl;
 					fp_open = 1;
 				}
 			}
@@ -142,23 +136,20 @@ namespace sjtu {
 				}
 			}
 
-			inline void readFile(void *place, offset_t offset, size_t num, size_t size) {
-				++fp_cnt;
+			inline void readFile(void *place, offset_t offset, size_t num, size_t size) const {
 				if (fseek(fp, offset, SEEK_SET)) throw "open file failed!";
-				size_t ret = fread(place, num, size, fp);
+				fread(place, num, size, fp);
 			}
 
-			inline void writeFile(void *place, offset_t offset, size_t num, size_t size) {
-				++fp_cnt;
+			inline void writeFile(void *place, offset_t offset, size_t num, size_t size) const {
 				if (fseek(fp, offset, SEEK_SET)) throw "open file failed!";
-				size_t ret = fwrite(place, num, size, fp);
+				fwrite(place, num, size, fp);
 			}
 
 			nameString fp_from_name;
 			FILE *fp_from;
 
-			inline void copy_readFile(void *place, offset_t offset, size_t num, size_t size) {
-				++fp_cnt;
+			inline void copy_readFile(void *place, offset_t offset, size_t num, size_t size) const{
 				if (fseek(fp_from, offset, SEEK_SET)) throw "open file failed";
 				size_t ret = fread(place, num, size, fp_from);
 			}
@@ -202,7 +193,6 @@ namespace sjtu {
 
 			inline void copyFile(char *to, char *from) {
 				fp_from_name.setName(from);
-				// std :: cout << from << std :: endl << fp_from_name.str << std :: endl;
 				fp_from = fopen(fp_from_name.str, "rb+");
 				if (fp_from == nullptr) throw "no such file";
 				basicInfo infoo;
@@ -812,6 +802,13 @@ namespace sjtu {
 						place = other.place;
 					}
 
+					// to get the value type pointed by iterator.
+					ValueType getValue() {
+						leafNode p;
+						from -> readFile(&p, offset, 1, sizeof(leafNode));
+						return p.data[place].second;
+					}
+
 					OperationResult modify(const ValueType& value) {
 						leafNode p;
 						from -> readFile(&p, offset, 1, sizeof(leafNode));
@@ -898,20 +895,18 @@ namespace sjtu {
 					}
 			};
 
-			// iterator complete, const_iterator not complete yet.
-
 			class const_iterator {
 					friend class BTree;
 				private:
 					offset_t offset;        // offset of the leaf node
 					int place;							// place of the element in the leaf node
-					BTree *from;
+					const BTree *from;
 				public:
 					const_iterator() {
 						from = nullptr;
 						place = 0, offset = 0;
 					}
-					const_iterator(BTree *_from, offset_t _offset = 0, int _place = 0) {
+					const_iterator(const BTree *_from, offset_t _offset = 0, int _place = 0) {
 						from = _from;
 						offset = _offset; place = _place;
 					}
@@ -925,38 +920,50 @@ namespace sjtu {
 						offset = other.offset;
 						place = other.place;
 					}
+					// to get the value type pointed by iterator.
+					ValueType getValue() {
+						leafNode p;
+						from -> readFile(&p, offset, 1, sizeof(leafNode));
+						return p.data[place].second;
+					}
 					// Return a new iterator which points to the n-next elements
 					const_iterator operator++(int) {
 						const_iterator ret = *this;
 						// end of bptree
-						if(*this == from -> end()) {
+						if(*this == from -> cend()) {
 							from = nullptr; place = 0; offset = 0;
 							return ret;
 						}
 						leafNode p;
 						from -> readFile(&p, offset, 1, sizeof(leafNode));
 						if(place == p.cnt - 1) {
-							offset = p.nxt;
-							place = 0;
+							if(p.nxt == 0) ++ place;
+							else {
+								offset = p.nxt;
+								place = 0;
+							}
 						} else ++ place;
 						return ret;
 					}
 					const_iterator& operator++() {
-						if(*this == from -> end()) {
+						if(*this == from -> cend()) {
 							from = nullptr; place = 0; offset = 0;
 							return *this;
 						}
 						leafNode p;
 						from -> readFile(&p, offset, 1, sizeof(leafNode));
-						if (place == p.cnt - 1) {
-							offset = p.nxt;
-							place = 0;
+						if(place == p.cnt - 1) {
+							if(p.nxt == 0) ++ place;
+							else {
+								offset = p.nxt;
+								place = 0;
+							}
 						} else ++ place;
 						return *this;
 					}
 					const_iterator operator--(int) {
 						const_iterator ret = *this;
-						if(*this == from -> begin()) {
+						if(*this == from -> cbegin()) {
 							from = nullptr; place = 0; offset = 0;
 							return ret;
 						}
@@ -970,7 +977,7 @@ namespace sjtu {
 						return ret;
 					}
 					const_iterator& operator--() {
-						if(*this == from -> begin()) {
+						if(*this == from -> cbegin()) {
 							from = nullptr; place = 0; offset = 0;
 							return *this;
 						}
@@ -1001,7 +1008,6 @@ namespace sjtu {
 
 			BTree() {
 				fp_name.setName(ID);
-				fp_cnt = 0;
 				fp = nullptr;
 				openFile();
 				if (file_already_exists == 0) build_tree();
@@ -1009,15 +1015,12 @@ namespace sjtu {
 
 			BTree(const BTree& other) {
 				fp_name.setName(ID);
-				fp_cnt = 0;
 				openFile();
 				copyFile(fp_name.str, other.fp_name.str);
 			}
 
 			BTree& operator=(const BTree& other) {
-//				++ID; 
 				fp_name.setName(ID);
-				fp_cnt = 0;
 				openFile();
 				copyFile(fp_name.str, other.fp_name.str);
 			}
@@ -1165,17 +1168,19 @@ namespace sjtu {
 					if (leaf.data[i].first == key) return const_iterator(this, leaf_offset, i);
 				return cend();
 			}
-
+			/**
+			 * this is a simple debug function for B Tree's ID number.
+			 * very simple, use it if necessary.
+			 */
 			void debugID() { std :: cerr << ID << ' ' << fp_name.str <<std :: endl;}
 			/**
 			 * this is a debug function for traverse.
 			 * just call it if necessary.
 			 * it will present all the elements in B Tree with its value type.
-			 * and it will count the file operation times.
 			 */
 			void debug_traverse() {
 				basicInfo infoo;
-				readFile(&infoo, 0, 1, sizeof(basicInfo));
+				readFile(&infoo, info_offset, 1, sizeof(basicInfo));
 				offset_t cur = infoo.head;
 				leafNode leaf;
 				std :: cout << info.head << ' ' << info.tail << std :: endl;
@@ -1189,7 +1194,32 @@ namespace sjtu {
 				}
 				std :: cout << '\n';
 				std :: cout << "=====================\n";
-				std :: cout << "fp cnt = " << fp_cnt << std :: endl;
+			}
+			/**
+			 * this is a debug function for iterator
+			 * just call it if necessary
+			 * it will present all the elements in B Tree with its value type by iterator operations.
+			 */
+			void debug_iterator() {
+				iterator it;
+				it = begin();
+				while(it != end()) {
+					std :: cout << it.getValue() << ' ';
+					++it;
+				}
+			}
+			/**
+			 * this is a debug function for const_iterator
+			 * just call it if necessary
+			 * it will present all the elements in B Tree with its value type by const_iterator operations.
+			 */
+			void debug_const_iterator() {
+				const_iterator it;
+				it = cbegin();
+				while(it != cend()) {
+					std :: cout << it.getValue() << ' ';
+					++it;
+				}
 			}
 	};
 }  // namespace sjtu

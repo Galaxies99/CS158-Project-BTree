@@ -12,15 +12,37 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="74371800-f38f-41ea-8f37-04f22f82eb2e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../BTree.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../BTree.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BTree.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/BTree.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BplusTree.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/BplusTree.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/BplusTree.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/BplusTree.dir/CXX.includecache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/count.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utility.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/utility.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data/five/BTree.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data/five/data_make.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data/five/data_make_erase.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data/five/data_make_query.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data/five/runTest.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data/five/sql_checker.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data/four/BTree.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data/four/data_make.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data/four/data_make_erase.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data/four/data_make_query.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data/four/runTest.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data/four/sql_checker.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data/one.memcheck/code.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data/one/code.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data/three/BTree.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../data/three/BTree.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data/three/data_make.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../data/three/data_make.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data/three/data_make_query.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../data/three/data_make_query.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data/three/insert.data" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data/three/insertionData" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data/three/query.data" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data/three/queryData" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data/three/runTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/../data/three/runTest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data/three/sql_checker.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../data/three/sql_checker.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data/two/BTree.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../data/two/BTree.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data/two/data_make.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../data/two/data_make.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data/two/data_make_query.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../data/two/data_make_query.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data/two/runTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/../data/two/runTest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data/two/sql_checker.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../data/two/sql_checker.cpp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -35,8 +57,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="279">
-              <caret line="18" column="3" selection-start-line="18" selection-start-column="3" selection-end-line="18" selection-end-column="3" />
+            <state relative-caret-position="294">
+              <caret line="17" column="22" selection-start-line="17" selection-start-column="22" selection-end-line="17" selection-end-column="22" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -47,8 +69,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/BTree.hpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret lean-forward="true" />
+            <state relative-caret-position="516">
+              <caret line="1225" lean-forward="true" selection-start-line="1225" selection-end-line="1225" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
               </folding>
@@ -59,8 +81,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utility.hpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="693">
-              <caret line="33" selection-start-line="33" selection-end-line="33" />
+            <state relative-caret-position="298">
+              <caret line="33" lean-forward="true" selection-start-line="33" selection-end-line="33" />
             </state>
           </provider>
         </entry>
@@ -69,36 +91,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>insert_</find>
-      <find>key</find>
-      <find>split_leaf</find>
-      <find>erase</find>
-      <find>MMIN</find>
-      <find>LMIN</find>
-      <find>split_</find>
-      <find>check_</find>
-      <find>locate(</find>
-      <find>merge_left(</find>
-      <find>merge_right(</find>
-      <find>locate</find>
-      <find>offset_t</find>
-      <find>merge_lef</find>
-      <find>merge_left_node</find>
-      <find>merge_left</find>
-      <find>++</find>
-      <find>cnt</find>
-      <find>insert(</find>
-      <find>cnt ++</find>
-      <find>++l</find>
-      <find>++leaf.cnt</find>
-      <find>erase(</find>
-      <find>readFile</find>
-      <find>o</find>
       <find>find(</find>
       <find>writeFile</find>
-      <find>insert</find>
-      <find>BTree(</find>
       <find>empty</find>
+      <find>copyFi</find>
+      <find>COPY</find>
+      <find>BTree(</find>
+      <find>copyFile(C</find>
+      <find>END</find>
+      <find>iterator end</find>
+      <find>openFile()</find>
+      <find>find</find>
+      <find>insert</find>
+      <find>insert(</find>
+      <find>pair(</find>
+      <find>split_leaf(</find>
+      <find>insert_leaf</find>
+      <find>insert_leaf(</find>
+      <find>split_leaf</find>
+      <find>M</find>
+      <find>insert_node(</find>
+      <find>insert_node(I</find>
+      <find>build_tree(</find>
+      <find>getVa</find>
+      <find>const_iterator</find>
+      <find>fp_cnt</find>
+      <find>cend()</find>
+      <find>const_iterator</find>
+      <find>build_tree</find>
+      <find>cerr &lt;&lt;</find>
+      <find>cerr</find>
     </findStrings>
     <replaceStrings>
       <replace>sizeof(internalNode)</replace>
@@ -106,6 +128,8 @@
       <replace>pair&lt;KeyType, ValueType&gt;</replace>
       <replace>std :: make_pair</replace>
       <replace>writeFile(&amp;info, info_offset</replace>
+      <replace>pair &lt;</replace>
+      <replace>pair</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -221,23 +245,31 @@
       <workItem from="1559001793566" duration="1143000" />
       <workItem from="1559135978958" duration="4113000" />
       <workItem from="1559181129621" duration="1154000" />
-      <workItem from="1559182449375" duration="578000" />
+      <workItem from="1559182449375" duration="1474000" />
+      <workItem from="1559195443557" duration="2436000" />
+      <workItem from="1559198730957" duration="2449000" />
+      <workItem from="1559207023437" duration="675000" />
+      <workItem from="1559227960191" duration="1997000" />
+      <workItem from="1559277359452" duration="43000" />
+      <workItem from="1559287235259" duration="2706000" />
+      <workItem from="1559290872634" duration="770000" />
+      <workItem from="1559304278591" duration="599000" />
+      <workItem from="1559351100091" duration="1294000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="76626000" />
+    <option name="totallyTimeSpent" value="90491000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.48945147" visible="true" weight="0.17627347" />
-      <window_info id="Structure" order="1" sideWeight="0.51054853" side_tool="true" visible="true" weight="0.17627347" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.47733712" visible="true" weight="0.19839142" />
+      <window_info id="Structure" order="1" sideWeight="0.5226629" side_tool="true" visible="true" weight="0.19839142" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3286119" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3286119" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -272,33 +304,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmake-build-debug/dat1.dat">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/cmake-build-debug/dat1.dat" />
     <entry file="file://$PROJECT_DIR$/cmake-build-debug/Makefile">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/utility.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="33" lean-forward="true" selection-start-line="33" selection-end-line="33" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
-          <caret line="18" column="3" selection-start-line="18" selection-start-column="3" selection-end-line="18" selection-end-column="3" />
+        <state relative-caret-position="294">
+          <caret line="17" column="22" selection-start-line="17" selection-start-column="22" selection-end-line="17" selection-end-column="22" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utility.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="693">
-          <caret line="33" selection-start-line="33" selection-end-line="33" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/BTree.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret lean-forward="true" />
+        <state relative-caret-position="516">
+          <caret line="1225" lean-forward="true" selection-start-line="1225" selection-end-line="1225" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>
