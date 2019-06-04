@@ -12,10 +12,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="74371800-f38f-41ea-8f37-04f22f82eb2e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BTree.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/BTree.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/BplusTree.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/BplusTree.dir/CXX.includecache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -30,7 +27,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="214">
+            <state relative-caret-position="567">
               <caret line="27" column="34" selection-start-line="27" selection-start-column="34" selection-end-line="27" selection-end-column="34" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
@@ -42,8 +39,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/BTree.hpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="500" column="26" lean-forward="true" selection-start-line="500" selection-start-column="26" selection-end-line="500" selection-end-column="26" />
+            <state relative-caret-position="583">
+              <caret line="1117" column="49" lean-forward="true" selection-start-line="1117" selection-start-column="49" selection-end-line="1117" selection-end-column="49" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
                 <element signature="e#155#224#0" expanded="true" />
@@ -55,7 +52,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utility.hpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="341">
+            <state relative-caret-position="504">
               <caret line="24" column="36" selection-start-line="24" selection-start-column="36" selection-end-line="24" selection-end-column="36" />
               <folding>
                 <element signature="e#599#619#0" expanded="true" />
@@ -68,8 +65,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>insert_node(</find>
-      <find>insert_node(I</find>
       <find>build_tree(</find>
       <find>getVa</find>
       <find>const_iterator</find>
@@ -98,6 +93,8 @@
       <find>check_node(</find>
       <find>std :: cerr</find>
       <find>merge right</find>
+      <find>FREAD</find>
+      <find>//</find>
     </findStrings>
     <replaceStrings>
       <replace>sizeof(internalNode)</replace>
@@ -234,16 +231,17 @@
       <workItem from="1559351100091" duration="1294000" />
       <workItem from="1559652399417" duration="578000" />
       <workItem from="1559653888323" duration="2646000" />
+      <workItem from="1559658311069" duration="587000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="93715000" />
+    <option name="totallyTimeSpent" value="94302000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.47468355" visible="true" weight="0.20375335" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.47468355" visible="true" weight="0.20643431" />
       <window_info id="Structure" order="1" sideWeight="0.5253165" side_tool="true" weight="0.20375335" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -302,7 +300,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="214">
+        <state relative-caret-position="567">
           <caret line="27" column="34" selection-start-line="27" selection-start-column="34" selection-end-line="27" selection-end-column="34" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
@@ -312,7 +310,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/utility.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="341">
+        <state relative-caret-position="504">
           <caret line="24" column="36" selection-start-line="24" selection-start-column="36" selection-end-line="24" selection-end-column="36" />
           <folding>
             <element signature="e#599#619#0" expanded="true" />
@@ -322,8 +320,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/BTree.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="500" column="26" lean-forward="true" selection-start-line="500" selection-start-column="26" selection-end-line="500" selection-end-column="26" />
+        <state relative-caret-position="583">
+          <caret line="1117" column="49" lean-forward="true" selection-start-line="1117" selection-start-column="49" selection-end-line="1117" selection-end-column="49" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
             <element signature="e#155#224#0" expanded="true" />
