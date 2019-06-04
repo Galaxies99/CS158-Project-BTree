@@ -19,8 +19,8 @@ namespace sjtu {
 			class const_iterator;
 
 		private:
-			static const int M = 10;                // need modify
-			static const int L = 6;                 // need modify
+			static const int M = 1000;                // need modify
+			static const int L = 200;                 // need modify
 			static const int MMIN = M / 2;            // M / 2
 			static const int LMIN = L / 2;            // L / 2
 			static const int info_offset = 0;
