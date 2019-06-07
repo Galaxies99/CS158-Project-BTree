@@ -10,10 +10,11 @@ vector<int> v;
 
 int main() {
 //	cerr << "begin insert: \n";
-	for (int i=1, t; i<=10000; ++i) {
+	for (int i=1, t; i<=10000000; ++i) {
 		t = 1ll * rand() * rand() % 10000000;
 		v.push_back(t);
 		T.insert(t, i);
+		if(i % 10000 == 0) cerr << i << endl;
 //		cerr << i << endl;
 	}
 //	cerr << "end insert.\n";
@@ -25,8 +26,8 @@ int main() {
 		if (i % 10000 == 0) cerr << i << endl;
 	}*/
 //	T.debug_traverse();
-	for (int i=0; i<v.size(); ++i) {
-		T.erase(v[i]);
-		cerr << i << endl;
-	}
+//	for (int i=0; i<v.size(); ++i) {
+//		T.erase(v[i]);
+//		cerr << i << endl;
+//	}
 }

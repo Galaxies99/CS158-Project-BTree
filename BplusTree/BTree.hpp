@@ -19,10 +19,12 @@ namespace sjtu {
 			class const_iterator;
 
 		private:
-			static const int M = 1000;                // need modify
-			static const int L = 200;                 // need modify
-			static const int MMIN = M / 2;            // M / 2
-			static const int LMIN = L / 2;            // L / 2
+			static const int M = (((sizeof(KeyType) + sizeof(node_t)) * 2 > 4079) ? 1 : (4079 / (sizeof(node_t) + sizeof(KeyType)) - 1));                // need modify
+			static const int L = (((sizeof(value_type)) * 2 > 4076) ? 1 : (4076 / (sizeof(value_type)) - 1));                 // need modify
+//			static const int M = 1000;
+//			static const int L = 200;
+			static const int MMIN = (M+1) / 2;            // M / 2
+			static const int LMIN = (L+1) / 2;            // L / 2
 			static const int info_offset = 0;
 
 			struct nameString {
@@ -77,7 +79,6 @@ namespace sjtu {
 					offset = 0, par = 0, pre = 0, nxt = 0, cnt = 0;
 				}
 			};
-
 			struct internalNode {
 				offset_t offset;      	// offset
 				node_t par;           	// parent
