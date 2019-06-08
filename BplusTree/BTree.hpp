@@ -234,7 +234,7 @@ namespace sjtu {
 			 * function: given a key and find the leaf it should be in.
 			 * return the offset of the leaf.
 			 */
-			node_t locate_leaf(const KeyType &key, offset_t offset) {
+			node_t locate_leaf(const KeyType &key, offset_t offset) const {
 				internalNode p;
 				readFile(&p, offset, 1, sizeof(internalNode));
 				if(p.type == 1) {
@@ -1160,7 +1160,7 @@ namespace sjtu {
 				return end();
 			}
 			const_iterator find(const KeyType& key) const {
-				offset_t leaf_offset = locate_leaf(key);
+				offset_t leaf_offset = locate_leaf(key, info.root);
 				if(leaf_offset == 0) return cend();
 				leafNode leaf;
 				readFile(&leaf, leaf_offset, 1, sizeof(leafNode));

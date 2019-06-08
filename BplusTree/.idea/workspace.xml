@@ -14,7 +14,6 @@
     <list default="true" id="74371800-f38f-41ea-8f37-04f22f82eb2e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BTree.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/BTree.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/dat0.dat" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/dat0.dat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
@@ -30,8 +29,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/BTree.hpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="26" column="54" lean-forward="true" selection-start-line="26" selection-start-column="54" selection-end-line="26" selection-end-column="54" />
+            <state relative-caret-position="288">
+              <caret line="242" column="21" lean-forward="true" selection-start-line="242" selection-start-column="21" selection-end-line="242" selection-end-column="21" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
                 <element signature="e#155#224#0" expanded="true" />
@@ -55,10 +54,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="10" column="12" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
+            <state relative-caret-position="298">
+              <caret line="65" column="1" lean-forward="true" selection-start-line="65" selection-start-column="1" selection-end-line="65" selection-end-column="1" />
               <folding>
-                <element signature="e#0#20#0" expanded="true" />
+                <element signature="e#0#19#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -68,8 +67,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>const_iterator</find>
-      <find>fp_cnt</find>
       <find>cend()</find>
       <find>build_tree</find>
       <find>cerr</find>
@@ -98,6 +95,8 @@
       <find>//</find>
       <find>1000</find>
       <find>200</find>
+      <find>find(</find>
+      <find>locate_leaf</find>
     </findStrings>
     <replaceStrings>
       <replace>sizeof(internalNode)</replace>
@@ -117,8 +116,8 @@
       <list>
         <option value="$PROJECT_DIR$/cmake-build-debug/BplusTree.hpp" />
         <option value="$PROJECT_DIR$/BplusTree.hpp" />
-        <option value="$PROJECT_DIR$/main.cpp" />
         <option value="$PROJECT_DIR$/BTree.hpp" />
+        <option value="$PROJECT_DIR$/main.cpp" />
       </list>
     </option>
   </component>
@@ -236,16 +235,19 @@
       <workItem from="1559653888323" duration="2646000" />
       <workItem from="1559658311069" duration="587000" />
       <workItem from="1559875159063" duration="1945000" />
+      <workItem from="1559962719185" duration="466000" />
+      <workItem from="1559964002067" duration="449000" />
+      <workItem from="1559964589454" duration="339000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="96247000" />
+    <option name="totallyTimeSpent" value="97501000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.47468355" visible="true" weight="0.20911528" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.47468355" visible="true" weight="0.21715818" />
       <window_info id="Structure" order="1" sideWeight="0.5253165" side_tool="true" weight="0.20375335" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -302,6 +304,16 @@
     <entry file="file://$PROJECT_DIR$/cmake-build-debug/Makefile">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="65" column="1" lean-forward="true" selection-start-line="65" selection-start-column="1" selection-end-line="65" selection-end-column="1" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/utility.hpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="382">
@@ -312,20 +324,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="10" column="12" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/BTree.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="26" column="54" lean-forward="true" selection-start-line="26" selection-start-column="54" selection-end-line="26" selection-end-column="54" />
+        <state relative-caret-position="288">
+          <caret line="242" column="21" lean-forward="true" selection-start-line="242" selection-start-column="21" selection-end-line="242" selection-end-column="21" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
             <element signature="e#155#224#0" expanded="true" />

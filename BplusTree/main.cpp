@@ -1,33 +1,66 @@
-# include <iostream>
-# include <stdlib.h>
-# include <algorithm>
-# include "BTree.hpp"
-# include <vector>
-using namespace std;
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include "btree.hpp"
 
-sjtu :: BTree <int, int> T;
-vector<int> v;
+struct Bint100 {
+	int key;
+	int trash[100];
+	Bint100(int x) {
+		key = x;
+	}
+	Bint100(){}
+	bool operator < (const Bint100& c) const {
+		return (key ^ 1111) < (c.key ^ 1111);
+	}
+	void operator = (const int& x) {
+		key = x;
+	}
+	bool operator == (const Bint100& c) const {
+		return key == c.key;
+	}
+	bool operator != (const Bint100& c) const {
+		return key != c.key;
+	}
+};
+
+struct Bint1000 {
+	int key;
+	int trash[1000];
+	Bint1000(int x) {
+		key = x;
+	}
+	Bint1000(){}
+	void operator = (const int& x) {
+		key = x;
+	}
+	bool operator != (const Bint1000& c) {
+		return key != c.key;
+	}
+};
+
+sjtu::BTree<Bint100, Bint1000> btree;
+
+Bint1000 func(Bint100 x) {
+	int f = (x.key ^ 1111) << 3 + (x.key & 1111);
+	if (x.key % 10) f = 0;
+	Bint1000 Bf = f;
+	return Bf;
+}
 
 int main() {
-//	cerr << "begin insert: \n";
-	for (int i=1, t; i<=10000000; ++i) {
-		t = 1ll * rand() * rand() % 10000000;
-		v.push_back(t);
-		T.insert(t, i);
-		if(i % 10000 == 0) cerr << i << endl;
-//		cerr << i << endl;
+	srand(time(0));
+	for (int i = 0 ; i < 1000; i ++) {
+		Bint100 k = i;
+		Bint1000 v = func(k);
+		btree.insert(k, v);
 	}
-//	cerr << "end insert.\n";
-	/*
-	cerr << "begin erase: \n";
-	for (int i=1; i<=250000; ++i) {
-		int p = 4 * i - rand() % 4;
-		if(T.erase(p) == sjtu :: Fail) throw "233";
-		if (i % 10000 == 0) cerr << i << endl;
-	}*/
-//	T.debug_traverse();
-//	for (int i=0; i<v.size(); ++i) {
-//		T.erase(v[i]);
-//		cerr << i << endl;
-//	}
+	for (int i = 0; i < 100; i++) {
+		Bint100 k = rand() % 1000;
+		Bint1000 v = btree.at(k);
+		if (v != func(k)) {
+			std::cout << "WA at query" << std::endl;
+			return 0;
+		}
+	}
 }
