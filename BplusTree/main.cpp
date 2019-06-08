@@ -42,11 +42,13 @@ struct Bint1000 {
 sjtu::BTree<Bint100, Bint1000> btree;
 
 Bint1000 func(Bint100 x) {
-	int f = (x.key ^ 1111) << 3 + (x.key & 1111);
+	int f = ((x.key ^ 1111) << 3) + (x.key & 1111);
 	if (x.key % 10) f = 0;
 	Bint1000 Bf = f;
 	return Bf;
 }
+
+bool del[2010];
 
 int main() {
 	srand(time(0));
@@ -61,6 +63,38 @@ int main() {
 		if (v != func(k)) {
 			std::cout << "WA at query" << std::endl;
 			return 0;
+		}
+	}
+
+	for (int i = 0; i < 100; i++) {
+		Bint100 k = rand() % 2000;
+		if (btree.count(k) != (k.key < 1000)) {
+			std::cout << "WA at count" << std::endl;
+			return 0;
+		}
+	}
+	for (int i = 0; i < 100; i++) {
+		Bint100 k = ((i << 2) | (i % 10));
+		del[k.key] = 1;
+		btree.erase(k);
+	}
+	for (int i = 0; i < 100; i++) {
+		Bint100 k = (i << 2);
+//		bool exs = ((i << 2) == ((i << 2) | (i % 10)));
+		if (!del[k.key]) {
+			if (btree.count(k) ^ 1) {
+				std::cout << "WA at erase" << std::endl;
+				return 0;
+			}
+			if (btree.at(k) != func(k)) {
+				std::cout << "WA at query after erase" << std::endl;
+				return 0;
+			}
+		} else {
+			if (btree.count(k)) {
+				std::cout << "WA at erase" << std::endl;
+				return 0;
+			}
 		}
 	}
 }

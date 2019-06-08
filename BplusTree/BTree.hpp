@@ -19,8 +19,8 @@ namespace sjtu {
 			class const_iterator;
 
 		private:
-			static const int M = (((sizeof(KeyType) + sizeof(node_t)) * 2 > 4079) ? 1 : (4079 / (sizeof(node_t) + sizeof(KeyType)) - 1));                // need modify
-			static const int L = (((sizeof(value_type)) * 2 > 4076) ? 1 : (4076 / (sizeof(value_type)) - 1));                 // need modify
+			static const int M = (4079 / (sizeof(node_t) + sizeof(KeyType))) < 5 ? 4 : (4079 / (sizeof(node_t) + sizeof(KeyType)));                // need modify
+			static const int L = (4076 / (sizeof(value_type))) < 5 ? 4 : (4076 / (sizeof(value_type)));                 // need modify
 //			static const int M = 1000;
 //			static const int L = 200;
 			static const int MMIN = (M+1) / 2;            // M / 2
@@ -1132,7 +1132,7 @@ namespace sjtu {
 			 * The default method of check the equivalence is !(a < b || b > a)
 			 */
 			size_t count(const KeyType& key) const {
-				return static_cast <size_t> (find(key) != iterator(nullptr));
+				return static_cast <size_t> (find(key) != cend());
 			}
 			ValueType at(const KeyType& key){
 				iterator it = find(key);
