@@ -19,8 +19,8 @@ namespace sjtu {
 			class const_iterator;
 
 		private:
-			static const int M = (4079 / (sizeof(node_t) + sizeof(KeyType))) < 5 ? 4 : (4079 / (sizeof(node_t) + sizeof(KeyType)));                // need modify
-			static const int L = (4076 / (sizeof(value_type))) < 5 ? 4 : (4076 / (sizeof(value_type)));                 // need modify
+			static const int M = (4079 / (sizeof(node_t) + sizeof(KeyType))) < 5 ? 4 : (4079 / (sizeof(node_t) + sizeof(KeyType)) - 1);                // need modify
+			static const int L = (4076 / (sizeof(value_type))) < 5 ? 4 : (4076 / (sizeof(value_type)) - 1);                 // need modify
 //			static const int M = 1000;
 //			static const int L = 200;
 			static const int MMIN = (M+1) / 2;            // M / 2
