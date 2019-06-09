@@ -14,6 +14,10 @@
     <list default="true" id="74371800-f38f-41ea-8f37-04f22f82eb2e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BTree.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/BTree.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/BplusTree.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/BplusTree.dir/CXX.includecache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/BplusTree.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/BplusTree.dir/depend.internal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/BplusTree.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/BplusTree.dir/depend.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/dat0.dat" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
@@ -29,11 +33,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/BTree.hpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="309">
-              <caret line="1070" column="49" selection-start-line="1070" selection-start-column="49" selection-end-line="1070" selection-end-column="49" />
+            <state relative-caret-position="13782">
+              <caret line="1226" selection-start-line="1226" selection-end-line="1226" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
-                <element signature="e#168#237#0" expanded="true" />
+                <element signature="e#155#224#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -42,10 +46,13 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utility.hpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="298">
-              <caret line="33" lean-forward="true" selection-start-line="33" selection-end-line="33" />
+            <state>
+              <caret lean-forward="true" />
               <folding>
+                <element signature="e#212#232#0" expanded="true" />
+                <element signature="e#508#528#0" expanded="true" />
                 <element signature="e#599#619#0" expanded="true" />
+                <element signature="e#722#742#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -54,10 +61,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="383">
-              <caret line="92" column="12" selection-start-line="92" selection-start-column="12" selection-end-line="92" selection-end-column="12" />
+            <state relative-caret-position="126">
+              <caret line="21" column="47" selection-start-line="21" selection-start-column="47" selection-end-line="21" selection-end-column="47" />
               <folding>
-                <element signature="e#0#19#0" expanded="true" />
+                <element signature="e#0#25#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -67,36 +74,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>cerr</find>
+      <find>crash</find>
+      <find>locate(</find>
+      <find>crash_</find>
+      <find>crash_node</find>
+      <find>crash_leaf(</find>
+      <find>newroot</find>
+      <find>at</find>
+      <find>ckear()</find>
+      <find>size_t i</find>
+      <find>size_t j</find>
+      <find>size_t</find>
+      <find>int j</find>
+      <find>update(</find>
+      <find>pair&lt;ss</find>
+      <find>pair&lt;ssize_t,size_t</find>
+      <find>locate</find>
+      <find>.....</find>
+      <find>insert</find>
+      <find>insert(</find>
+      <find>throw</find>
+      <find>crash_leaf1</find>
+      <find>2919</find>
+      <find>clear()</find>
       <find>at(</find>
-      <find>cerr &lt;&lt;</find>
-      <find>cout &lt;&lt;</find>
-      <find>operate_leaf</find>
-      <find>operate_leaf(</find>
-      <find>merge_right(</find>
-      <find>writeFile(</find>
-      <find>insert_node</find>
-      <find>merge_</find>
-      <find>merge_right_node(</find>
-      <find>borrow_right_node(</find>
-      <find>merge_right</find>
-      <find>check_node</find>
-      <find>node.cnt</find>
-      <find>merge_right_node</find>
-      <find>operate_node(</find>
-      <find>)</find>
-      <find>check_node(</find>
-      <find>std :: cerr</find>
-      <find>merge right</find>
-      <find>FREAD</find>
-      <find>//</find>
-      <find>1000</find>
-      <find>200</find>
-      <find>find(</find>
-      <find>locate_leaf</find>
-      <find>COUNT(</find>
-      <find>erase</find>
-      <find>erase(</find>
+      <find>tree</find>
+      <find>~B</find>
+      <find>insertion</find>
+      <find>clear(</find>
+      <find>clear</find>
+      <find>crash_leaf</find>
     </findStrings>
     <replaceStrings>
       <replace>sizeof(internalNode)</replace>
@@ -106,6 +113,8 @@
       <replace>writeFile(&amp;info, info_offset</replace>
       <replace>pair &lt;</replace>
       <replace>pair</replace>
+      <replace>fstream::binary</replace>
+      <replace>ios::beg</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -116,6 +125,7 @@
       <list>
         <option value="$PROJECT_DIR$/cmake-build-debug/BplusTree.hpp" />
         <option value="$PROJECT_DIR$/BplusTree.hpp" />
+        <option value="$PROJECT_DIR$/utility.hpp" />
         <option value="$PROJECT_DIR$/BTree.hpp" />
         <option value="$PROJECT_DIR$/main.cpp" />
       </list>
@@ -123,7 +133,7 @@
   </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-10" />
+    <option name="x" value="-15" />
     <option name="width" value="1750" />
     <option name="height" value="980" />
   </component>
@@ -133,22 +143,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope">
-        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
-          <expand>
-            <path>
-              <item name="BplusTree" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-            </path>
-            <path>
-              <item name="BplusTree" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name=".idea" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -160,6 +154,31 @@
               <item name="BplusTree" type="b2602c69:ProjectViewProjectNode" />
               <item name="BplusTree" type="462c0819:PsiDirectoryNode" />
               <item name="cmake-build-debug" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Scope 'Changed Files'; set:Changed Files; ALL; class com.intellij.packageDependencies.ChangeListScope">
+          <expand>
+            <path>
+              <item name="BplusTree" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
+          <expand>
+            <path>
+              <item name="BplusTree" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+            </path>
+            <path>
+              <item name="BplusTree" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name=".idea" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
           </expand>
           <select />
@@ -239,21 +258,27 @@
       <workItem from="1559964002067" duration="449000" />
       <workItem from="1559964589454" duration="339000" />
       <workItem from="1559965921207" duration="1818000" />
+      <workItem from="1559969805528" duration="672000" />
+      <workItem from="1559980455505" duration="108000" />
+      <workItem from="1559985403438" duration="1849000" />
+      <workItem from="1559990069763" duration="7104000" />
+      <workItem from="1560001566286" duration="366000" />
+      <workItem from="1560003605117" duration="17405000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="99319000" />
+    <option name="totallyTimeSpent" value="126823000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.47468355" visible="true" weight="0.21983914" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.47468355" visible="true" weight="0.092493296" />
       <window_info id="Structure" order="1" sideWeight="0.5253165" side_tool="true" weight="0.20375335" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3286119" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3555241" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39943343" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -263,20 +288,20 @@
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="10" weight="0.3286119" />
       <window_info anchor="bottom" id="CMake" order="11" />
-      <window_info anchor="bottom" id="Messages" order="12" weight="0.30311614" />
+      <window_info anchor="bottom" id="Messages" order="12" weight="0.27620396" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Database" order="3" />
     </layout>
     <layout-to-restore>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.47468355" visible="true" weight="0.20375335" />
-      <window_info id="Structure" order="1" sideWeight="0.5253165" side_tool="true" visible="true" weight="0.20375335" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.47468355" visible="true" weight="0.092493296" />
+      <window_info id="Structure" order="1" sideWeight="0.5253165" side_tool="true" weight="0.20375335" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3286119" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3555241" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39943343" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -285,7 +310,7 @@
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="10" weight="0.3286119" />
       <window_info anchor="bottom" id="CMake" order="11" />
-      <window_info anchor="bottom" id="Messages" order="12" weight="0.30311614" />
+      <window_info anchor="bottom" id="Messages" order="12" weight="0.27620396" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -305,33 +330,36 @@
     <entry file="file://$PROJECT_DIR$/cmake-build-debug/Makefile">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/BTree.hpp">
+    <entry file="file://$PROJECT_DIR$/utility.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="1070" column="49" selection-start-line="1070" selection-start-column="49" selection-end-line="1070" selection-end-column="49" />
+        <state>
+          <caret lean-forward="true" />
           <folding>
-            <element signature="e#0#23#0" expanded="true" />
-            <element signature="e#168#237#0" expanded="true" />
+            <element signature="e#212#232#0" expanded="true" />
+            <element signature="e#508#528#0" expanded="true" />
+            <element signature="e#599#619#0" expanded="true" />
+            <element signature="e#722#742#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utility.hpp">
+    <entry file="file://$PROJECT_DIR$/BTree.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="33" lean-forward="true" selection-start-line="33" selection-end-line="33" />
+        <state relative-caret-position="13782">
+          <caret line="1226" selection-start-line="1226" selection-end-line="1226" />
           <folding>
-            <element signature="e#599#619#0" expanded="true" />
+            <element signature="e#0#23#0" expanded="true" />
+            <element signature="e#155#224#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="383">
-          <caret line="92" column="12" selection-start-line="92" selection-start-column="12" selection-end-line="92" selection-end-column="12" />
+        <state relative-caret-position="126">
+          <caret line="21" column="47" selection-start-line="21" selection-start-column="47" selection-end-line="21" selection-end-column="47" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#0#25#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-G:/GalaxiesWork/CS158-Project-BTree/BplusTree/btree.hpp
+G:/GalaxiesWork/CS158-Project-BTree/BplusTree/BTree.hpp
 utility.hpp
 G:/GalaxiesWork/CS158-Project-BTree/BplusTree/utility.hpp
 fstream
@@ -27,14 +27,20 @@ string
 -
 
 G:/GalaxiesWork/CS158-Project-BTree/BplusTree/main.cpp
-iostream
+bits/stdc++.h
 -
-cstdlib
+stdlib.h
 -
-ctime
+utility.hpp
+G:/GalaxiesWork/CS158-Project-BTree/BplusTree/utility.hpp
+string.h
 -
-btree.hpp
-G:/GalaxiesWork/CS158-Project-BTree/BplusTree/btree.hpp
+algorithm
+-
+windows.h
+-
+BTree.hpp
+G:/GalaxiesWork/CS158-Project-BTree/BplusTree/BTree.hpp
 
 G:/GalaxiesWork/CS158-Project-BTree/BplusTree/utility.hpp
 utility

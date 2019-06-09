@@ -1,100 +1,90 @@
-#include <iostream>
-#include <cstdlib>
-#include <ctime>
-#include "btree.hpp"
+# include <bits/stdc++.h>
+# include <stdlib.h>
+# include "utility.hpp"
+# include <string.h>
+# include <algorithm>
+# include <windows.h>
+# include "BTree.hpp"
 
-struct Bint100 {
-	int key;
-	int trash[100];
-	Bint100(int x) {
-		key = x;
-	}
-	Bint100(){}
-	bool operator < (const Bint100& c) const {
-		return (key ^ 1111) < (c.key ^ 1111);
-	}
-	void operator = (const int& x) {
-		key = x;
-	}
-	bool operator == (const Bint100& c) const {
-		return key == c.key;
-	}
-	bool operator != (const Bint100& c) const {
-		return key != c.key;
-	}
-};
+using namespace std;
 
-struct Bint1000 {
-	int key;
-	int trash[1000];
-	Bint1000(int x) {
-		key = x;
-	}
-	Bint1000(){}
-	void operator = (const int& x) {
-		key = x;
-	}
-	bool operator != (const Bint1000& c) {
-		return key != c.key;
-	}
-};
-
-sjtu::BTree<Bint100, Bint1000> btree;
-
-Bint1000 func(Bint100 x) {
-	int f = ((x.key ^ 1111) << 3) + (x.key & 1111);
-	if (x.key % 10) f = 0;
-	Bint1000 Bf = f;
-	return Bf;
-}
-
-bool del[2010];
+int data[20010], rd[20010];
+int data2[1000010];
 
 int main() {
-	srand(time(0));
-	for (int i = 0 ; i < 1000; i ++) {
-		Bint100 k = i;
-		Bint1000 v = func(k);
-		btree.insert(k, v);
-	}
-	for (int i = 0; i < 100; i++) {
-		Bint100 k = rand() % 1000;
-		Bint1000 v = btree.at(k);
-		if (v != func(k)) {
-			std::cout << "WA at query" << std::endl;
+	cout << "This is a very basic test code for your B (plus) Tree by Galaxies.\n";
+	cout << "Version 1.0\n";
+	cout << "\n";
+	system("del btree");
+	sjtu::BTree<int,int> T;
+	for (int i=1; i<=20000; ++i) data[i] = i;
+	random_shuffle(data+1, data+20001);
+	for (int i=1; i<=20000; ++i) rd[data[i]] = i;
+	cout << "  1. Insertion Test (Small) ...       ";
+	for (int i=1; i<=20000; ++i) T.insert(i, data[i]);
+	cout << " PASS!\n";
+	cout << "  2. At Test (Small) ...              ";
+	for (int i=1; i<=20000; ++i) {
+		if(T.at(i) != data[i]) {
+			cout << " FAIL!\n";
+			cout << "Wrong at query " << i << endl;
+			cout << "Your answer is " << T.at(i) << ", but the correct answer is " << data[i] << endl;
 			return 0;
 		}
 	}
+	cout << " PASS!\n";
+	cout << "  3. Clear Test ...                    ";
+	T.clear();
+	if(T.size() != 0) {
+		cout <<" FAIL!\n";
+		return 0;
+	} else cout << "PASS!\n";
+	cout << "  4. Insertion Test After Clear ...   ";
+	for (int i=1; i<=20000; ++i) T.insert(i, data[i]);
+	cout << " PASS!\n";
+	cout << "  5. At Test After Clear ...          ";
+	for (int i=1; i<=20000; ++i) {
+		if(T.at(i) != data[i]) {
+			cout << " FAIL!\n";
+			cout << "Wrong at query " << i << endl;
+			cout << "Your answer is " << i << ", but the correct answer is " << data[i] << endl;
+			return 0;
+		}
+	}
+	cout << " PASS!\n";
+	T.clear();
+	cout << "  6. Random Insertion Test ...        ";
+	for (int i=1; i<=20000; ++i) {
+		T.insert(data[i], i);
+	}
+	cout << " PASS!\n";
+	cout << "  7. At After Random Insertion ...    ";
+	for (int i=1; i<=20000; ++i) {
+		if(T.at(i) != rd[i]) {
+			cout << " FAIL!\n";
+			cout << "Wrong at query " << i << endl;
+			cout << "Your answer is " << T.at(i) << ", but the correct answer is " << rd[i] << endl;
+			return 0;
+		}
+	}
+	cout << " PASS!\n";
+	cout << "  8. Empty Test ...                   ";
+	if(T.empty()) {
+		cout << " FAIL!\n";
+		return 0;
+	}
+	T.clear();
+	if(!T.empty()) {
+		cout << " FAIL!\n";
+		return 0;
+	}
+	cout << " PASS!\n";
+	cout << "  9. Big Random Insertion Persistent Test ... \n";
+	for (int i=1; i<=20000; ++i) {
+		T.insert(rand() * rand() * rand(), i);
+	}
+	cout << "PASS";
 
-	for (int i = 0; i < 100; i++) {
-		Bint100 k = rand() % 2000;
-		if (btree.count(k) != (k.key < 1000)) {
-			std::cout << "WA at count" << std::endl;
-			return 0;
-		}
-	}
-	for (int i = 0; i < 100; i++) {
-		Bint100 k = ((i << 2) | (i % 10));
-		del[k.key] = 1;
-		btree.erase(k);
-	}
-	for (int i = 0; i < 100; i++) {
-		Bint100 k = (i << 2);
-//		bool exs = ((i << 2) == ((i << 2) | (i % 10)));
-		if (!del[k.key]) {
-			if (btree.count(k) ^ 1) {
-				std::cout << "WA at erase" << std::endl;
-				return 0;
-			}
-			if (btree.at(k) != func(k)) {
-				std::cout << "WA at query after erase" << std::endl;
-				return 0;
-			}
-		} else {
-			if (btree.count(k)) {
-				std::cout << "WA at erase" << std::endl;
-				return 0;
-			}
-		}
-	}
+
+	return 0;
 }
